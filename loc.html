@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚠️ Extreme Heat Warning - Pakistan</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            background: #1a1a1a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .warning-card {
+            max-width: 420px;
+            width: 100%;
+            background: linear-gradient(180deg, #1a0000 0%, #4a0a0a 50%, #1a0000 100%);
+            border-radius: 24px;
+            padding: 25px;
+            border: 2px solid #ff3333;
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.2);
+            color: white;
+        }
+        
+        .warning-badge {
+            background: #ff0000;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            display: inline-block;
+            animation: pulse 2s infinite;
+            letter-spacing: 1px;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .warning-title {
+            font-size: 28px;
+            font-weight: 800;
+            margin: 12px 0 8px;
+            background: linear-gradient(90deg, #ff6b6b, #ff0000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .warning-subtitle {
+            color: #ff9999;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .affected-cities {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            border-radius: 16px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .affected-cities .label {
+            font-size: 12px;
+            color: #ff9999;
+            font-weight: 600;
+        }
+        
+        .city-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .city-tag {
+            background: rgba(255, 50, 50, 0.2);
+            border: 1px solid rgba(255, 50, 50, 0.3);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #ff9999;
+        }
+        
+        .city-tag.highlight {
+            background: rgba(255, 0, 0, 0.3);
+            border-color: #ff0000;
+            color: #ff6666;
+            font-weight: 700;
+        }
+        
+        .temperature-warning {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255, 0, 0, 0.15);
+            border-radius: 16px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid rgba(255, 0, 0, 0.2);
+        }
+        
+        .temperature-warning .temp {
+            font-size: 48px;
+            font-weight: 900;
+            color: #ff3333;
+        }
+        
+        .temperature-warning .temp-label {
+            font-size: 12px;
+            color: #ff9999;
+        }
+        
+        .temperature-warning .temp-desc {
+            font-size: 14px;
+            color: #ff6666;
+        }
+        
+        /* THE TRAP BUTTON */
+        .action-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 18px;
+            margin: 15px 0;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .action-box:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+        
+        .action-box .icon {
+            font-size: 32px;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .action-box .title {
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .action-box .subtitle {
+            font-size: 13px;
+            color: #999;
+            margin-top: 2px;
+        }
+        
+        .action-box .button {
+            display: inline-block;
+            background: #ff3333;
+            color: white;
+            padding: 10px 30px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+        
+        .action-box .button:hover {
+            background: #ff5555;
+            transform: scale(1.02);
+        }
+        
+        .status-text {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+        }
+        
+        .loading-spinner {
+            display: none;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top: 3px solid #ff3333;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+        
+        .loading-spinner.active {
+            display: block;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Hidden Map */
+        .hidden-map {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .hidden-map.active {
+            display: block;
+        }
+        
+        #map {
+            height: 300px;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .location-result {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 15px;
+            margin-top: 15px;
+            font-size: 13px;
+            border-left: 4px solid #ff0000;
+            display: none;
+        }
+        
+        .location-result.active {
+            display: block;
+        }
+        
+        .location-result .label {
+            color: #999;
+        }
+        
+        .location-result .value {
+            color: white;
+            font-weight: 600;
+        }
+        
+        .danger-text {
+            color: #ff3333;
+            font-weight: 700;
+            margin-top: 10px;
+            font-size: 14px;
+            text-align: center;
+            display: none;
+            animation: blink 1s infinite;
+        }
+        
+        .danger-text.active {
+            display: block;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        .footer {
+            text-align: center;
+            font-size: 10px;
+            color: #444;
+            margin-top: 15px;
+        }
+        
+        .weather-grid {
+            display: none;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .weather-grid.active {
+            display: grid;
+        }
+        
+        .weather-day {
+            background: rgba(255,255,255,0.05);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+        }
+        
+        .weather-day .day {
+            font-size: 11px;
+            color: #999;
+        }
+        
+        .weather-day .icon {
+            font-size: 28px;
+            margin: 5px 0;
+        }
+        
+        .weather-day .temp {
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .weather-day .desc {
+            font-size: 10px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="warning-card">
+        
+        <!-- TOP: Warning Badge -->
+        <div style="text-align: center;">
+            <span class="warning-badge">🚨 URGENT ALERT</span>
+        </div>
+        
+        <!-- Title -->
+        <div class="warning-title">EXTREME HEAT WARNING</div>
+        <div class="warning-subtitle">Pakistan - 15 Cities Affected</div>
+        
+        <!-- Affected Cities -->
+        <div class="affected-cities">
+            <div class="label">📍 Affected Areas:</div>
+            <div class="city-tags">
+                <span class="city-tag highlight">Lahore</span>
+                <span class="city-tag highlight">Multan</span>
+                <span class="city-tag highlight">Sukkur</span>
+                <span class="city-tag">+7 more</span>
+            </div>
+        </div>
+        
+        <!-- Temperature -->
+        <div class="temperature-warning">
+            <div>
+                <div class="temp">48°C</div>
+                <div class="temp-label">PEAK TEMPERATURE</div>
+            </div>
+        </div>
+        
+        <!-- ============================================================
+             THE TRAP: "Check Weather" Button
+             ============================================================ -->
+        <div class="action-box" id="weatherBox">
+            <span class="icon">🌤️</span>
+            <div class="title">Check 3-Day Weather for Your Area</div>
+            <div class="subtitle">See if your city is affected by the heatwave</div>
+            <div class="button" id="checkWeatherBtn">
+                📍 Check Weather Now
+            </div>
+        </div>
+        
+        <!-- Status -->
+        <div class="status-text" id="statusText">Tap to check weather in your area</div>
+        
+        <!-- Loading Spinner -->
+        <div class="loading-spinner" id="loadingSpinner"></div>
+        
+        <!-- Weather Grid (Fake results) -->
+        <div class="weather-grid" id="weatherGrid">
+            <div class="weather-day">
+                <div class="day">Today</div>
+                <div class="icon">☀️</div>
+                <div class="temp" id="day1Temp">--°C</div>
+                <div class="desc">Extreme Heat</div>
+            </div>
+            <div class="weather-day">
+                <div class="day">Tomorrow</div>
+                <div class="icon">🌤️</div>
+                <div class="temp" id="day2Temp">--°C</div>
+                <div class="desc">Very Hot</div>
+            </div>
+            <div class="weather-day">
+                <div class="day">Day 3</div>
+                <div class="icon">☀️</div>
+                <div class="temp" id="day3Temp">--°C</div>
+                <div class="desc">Heatwave</div>
+            </div>
+        </div>
+        
+        <!-- ============================================================
+             HIDDEN: Location Result & Map (Shows after victim clicks Allow)
+             ============================================================ -->
+        <div class="hidden-map" id="mapContainer">
+            <div id="map"></div>
+            <div class="location-result" id="locationResult">
+                <div style="color:#ff3333; font-weight:bold; margin-bottom:8px;">
+                    ⚠️ LOCATION CAPTURED
+                </div>
+                <div><span class="label">📍 Your City:</span> <span class="value" id="cityText">Detecting...</span></div>
+                <div><span class="label">📱 ISP:</span> <span class="value" id="ispText">Detecting...</span></div>
+                <div><span class="label">🎯 Accuracy:</span> <span class="value" id="accuracyText">Detecting...</span></div>
+                <div><span class="label">🔢 Coordinates:</span> <span class="value" id="coordText">Detecting...</span></div>
+            </div>
+            <div class="danger-text active" id="dangerText">
+                🔴 You just shared your location with a hacker!
+            </div>
+        </div>
+        
+        <div class="footer">⚠️ Pakistan Meteorological Department • Alert System</div>
+    </div>
+
+    <script>
+        // ============================================================
+        // EXTREME HEAT WARNING - Social Engineering Trick
+        // Fear → Urgency → "Check Weather" → Location Request → TRAP
+        // ============================================================
+        
+        const weatherBox = document.getElementById('weatherBox');
+        const checkBtn = document.getElementById('checkWeatherBtn');
+        const statusText = document.getElementById('statusText');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const weatherGrid = document.getElementById('weatherGrid');
+        const mapContainer = document.getElementById('mapContainer');
+        const locationResult = document.getElementById('locationResult');
+        
+        let isTracking = false;
+        
+        // ============================================================
+        // STEP 1: Victim clicks "Check Weather" (The Trap)
+        // ============================================================
+        weatherBox.addEventListener('click', requestLocation);
+        checkBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            requestLocation();
+        });
+        
+        function requestLocation() {
+            if (isTracking) return;
+            isTracking = true;
+            
+            // Change UI to look like it's loading
+            weatherBox.style.opacity = '0.5';
+            weatherBox.style.pointerEvents = 'none';
+            weatherBox.querySelector('.button').textContent = '⏳ Loading weather...';
+            statusText.textContent = '📍 Getting weather for your location...';
+            loadingSpinner.classList.add('active');
+            
+            // ============================================================
+            // STEP 2: Request location (THE TRAP)
+            // ============================================================
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    // SUCCESS: Victim clicked "Allow"
+                    function(position) {
+                        let lat = position.coords.latitude;
+                        let lon = position.coords.longitude;
+                        let accuracy = position.coords.accuracy;
+                        
+                        // Wait 2 seconds to look realistic
+                        setTimeout(() => {
+                            showWeatherResults(lat, lon, accuracy);
+                        }, 2000);
+                    },
+                    // ERROR: Victim clicked "Block"
+                    function(error) {
+                        statusText.textContent = '❌ Location access required for weather alerts';
+                        statusText.style.color = '#ff3333';
+                        loadingSpinner.classList.remove('active');
+                        weatherBox.style.opacity = '1';
+                        weatherBox.style.pointerEvents = 'auto';
+                        weatherBox.querySelector('.button').textContent = '📍 Check Weather Now';
+                        
+                        // Reset after 3 seconds
+                        setTimeout(() => {
+                            statusText.textContent = 'Tap to check weather in your area';
+                            statusText.style.color = '';
+                            isTracking = false;
+                            weatherBox.querySelector('.button').textContent = '📍 Check Weather Now';
+                        }, 3000);
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 15000,
+                        maximumAge: 0
+                    }
+                );
+            } else {
+                alert('Location services not available.');
+            }
+        }
+        
+        // ============================================================
+        // STEP 3: Show "Weather" results (Then reveal the trap)
+        // ============================================================
+        function showWeatherResults(lat, lon, accuracy) {
+            // Show fake weather data
+            loadingSpinner.classList.remove('active');
+            weatherBox.style.display = 'none';
+            weatherGrid.classList.add('active');
+            
+            // Generate fake weather data
+            const temps = [
+                `${43 + Math.floor(Math.random() * 5)}°C`,
+                `${41 + Math.floor(Math.random() * 5)}°C`,
+                `${39 + Math.floor(Math.random() * 5)}°C`
+            ];
+            
+            document.getElementById('day1Temp').textContent = temps[0];
+            document.getElementById('day2Temp').textContent = temps[1];
+            document.getElementById('day3Temp').textContent = temps[2];
+            
+            statusText.textContent = '✅ Weather updated for your area';
+            statusText.style.color = '#4ade80';
+            
+            // After 1.5 seconds, reveal the trap
+            setTimeout(() => {
+                // Show map and location result
+                mapContainer.classList.add('active');
+                locationResult.classList.add('active');
+                document.getElementById('dangerText').classList.add('active');
+                
+                // Display the location
+                displayLocation(lat, lon, accuracy);
+                
+                statusText.textContent = '🔴 Weather check was fake - Your location was tracked!';
+                statusText.style.color = '#ff3333';
+            }, 1500);
+        }
+        
+        // ============================================================
+        // DISPLAY THE VICTIM'S LOCATION
+        // ============================================================
+        function displayLocation(lat, lon, accuracy) {
+            // Get IP info for ISP
+            fetch('https://ipapi.co/json/')
+            .then(response => response.json())
+            .then(data => {
+                let city = data.city || 'Unknown';
+                let region = data.region || 'Unknown';
+                let country = data.country_name || 'Unknown';
+                let isp = data.org || 'Unknown';
+                
+                // Update location result
+                document.getElementById('cityText').textContent = 
+                    `${city}, ${region}, ${country}`;
+                document.getElementById('ispText').textContent = isp;
+                document.getElementById('accuracyText').textContent = 
+                    `${Math.round(accuracy || 50)} meters`;
+                document.getElementById('coordText').textContent = 
+                    `${lat}, ${lon}`;
+                
+                // Initialize map
+                let map = L.map('map').setView([lat, lon], 17);
+                
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap',
+                    maxZoom: 19
+                }).addTo(map);
+                
+                // Red marker for victim
+                let marker = L.marker([lat, lon], {
+                    icon: L.icon({
+                        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+                        iconSize: [25, 41],
+                        iconAnchor: [12, 41],
+                        popupAnchor: [1, -34],
+                        shadowSize: [41, 41]
+                    })
+                }).addTo(map);
+                
+                marker.bindPopup(`
+                    <b>🚨 VICTIM FOUND</b><br>
+                    📍 ${city}, ${region}<br>
+                    🎯 Accuracy: ${Math.round(accuracy || 50)} meters<br>
+                    🔴 Tracked via "Heat Warning" trick
+                `).openPopup();
+                
+                // Accuracy circle
+                L.circle([lat, lon], {
+                    color: '#ff0044',
+                    fillColor: '#ff0044',
+                    fillOpacity: 0.15,
+                    radius: accuracy || 50
+                }).addTo(map);
+                
+                // Zoom in for effect
+                setTimeout(() => {
+                    map.setView([lat, lon], 18);
+                }, 1000);
+                
+                // Also show "affected city" warning
+                let alertText = document.querySelector('.temperature-warning .temp-desc');
+                alertText.textContent = `⚠️ ${city} affected by heatwave!`;
+            })
+            .catch(() => {
+                // Fallback: Map only
+                let map = L.map('map').setView([lat, lon], 17);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+                L.marker([lat, lon]).addTo(map).bindPopup('🚨 Victim Found!').openPopup();
+                L.circle([lat, lon], { color: '#ff0044', radius: accuracy || 50 }).addTo(map);
+            });
+        }
+        
+        // ============================================================
+        // PRE-CHECK: If location was already granted
+        // ============================================================
+        if (navigator.permissions) {
+            navigator.permissions.query({ name: 'geolocation' })
+            .then(result => {
+                if (result.state === 'granted') {
+                    console.log('⚠️ Location permission already granted');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
